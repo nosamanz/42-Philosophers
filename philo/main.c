@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 	int check;
 	long id = 1;
 
-	for (id = 1; id <= 10; id++);
+	while (id <= 10)
 	{
 		check = pthread_create(&threads[id], NULL, worker_thread, (void *)id);
 		if (check != 0)
@@ -42,9 +42,12 @@ int	main(int argc, char **argv)
 			printf("Error!");
 			return (0);
 		}
+		id++;
 	}
 	id = 1;
-    for(id = 1; id <= 10; id++) {
+	while (id <= 10)
+	{
 		pthread_join(threads[id], NULL);
-  	}
+		id++;
+	}
 }
