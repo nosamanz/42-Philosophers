@@ -3,41 +3,42 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-// void	*worker_thread()
-// {
-// 	printf("This is worker_thread\n");
-// 	return (NULL);
-// }
-
-// int	main(void)
-// {
-// 	pthread_t my_thread;
-// 	int ret;
-
-// 	printf("In main.\n");
-// 	ret = pthread_create(&my_thread, NULL, &worker_thread, NULL);
-// 	if (ret != 0)
-// 		printf("%d\n", ret);
-// 	pthread_join(my_thread, NULL);
-// 	return (0);
-// }
+typedef struct s_thread
+{
+	pthread_mutex_t lock;
+}			t_thread;
 
 void *worker_thread(void *id)
 {
-	printf("THREAD #%ld\n", (long)id);
+	static int work;
+	int i = 0;
+
+	pthread_mutex_lock(thread->lock);
+	work += 1;
+	printf("work %d has started\n", work);
+	while (i <= 15)
+		i++;
+	printf("work %d has finished\n", work);
+	pthread_mutex_unlock(thread->lock);
 	return(NULL);
 }
 
 int	main(int argc, char **argv)
 {
 	pthread_t	threads[10];
-	int check;
-	long id = 1;
+	int create;
+	long id = 0;
+	t_thread thread;
 
+	if (pthread_mutex_init(thread->lock, NULL) != 0)
+	{
+		printf("mutex init failed\n");
+		return 0;
+	}
 	while (id <= 10)
 	{
-		check = pthread_create(&threads[id], NULL, worker_thread, (void *)id);
-		if (check != 0)
+		create = pthread_create(&threads[id], NULL, worker_thread, (void *)id);
+		if (create != 0)
 		{
 			printf("Error!");
 			return (0);
