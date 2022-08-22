@@ -12,6 +12,8 @@ void	p_assigment(t_philo *ph, char **argv)
 	//ph->time_to_sleep = ft_atoi(argv[4]);
 	//if (argc == 6)
 	//	ph->n_of_ph_m_eat = ft_atoi(argv[5]);
+	ph->philo->pos = 0;
+	printf("PHILO %d is eating\n", ph->philo->pos);
 	pthread_mutex_init(&ph->fork_left, NULL);
 	pthread_mutex_init(&ph->fork_right, NULL);
 	while (i <= ph->n_of_philo)

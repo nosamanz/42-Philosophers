@@ -15,6 +15,7 @@ typedef struct	s_status
 	int	eat;
 	int	sleep;
 	int	think;
+	int	pos;
 }				t_status;
 
 typedef	struct	s_philo
