@@ -1,26 +1,37 @@
 #include "philo.h"
 
+void	forks(t_philo *ph)
+{
+	int	i;
+
+	i = 0;
+	ph->fork = malloc(sizeof(pthread_t) * ph->n_of_philo);
+	while (i < ph->n_of_philo)
+	{
+		pthread_mutex_init(&ph->fork[i], NULL);
+		i++;
+	}
+}
+
 void	p_assigment(t_philo *ph, char **argv)
 {
 	int i;
 
 	i = 0;
 	ph->n_of_philo = ft_atoi(argv[1]);
-	ph->philo = malloc(sizeof(t_philo) * ph->n_of_philo);// filozof sayisi kadar liste
+	printf("n_of philo %d\n", ph->n_of_philo);
+	ph->philo_s = malloc(sizeof(t_philo) * ph->n_of_philo);// filozof sayisi kadar liste (status)
 	ph->time_to_die = ft_atoi(argv[2]);
-	//ph->time_to_eat = ft_atoi(argv[3]);
-	//ph->time_to_sleep = ft_atoi(argv[4]);
-	//if (argc == 6)
-	//	ph->n_of_ph_m_eat = ft_atoi(argv[5]);
-	ph->philo->pos = 0;
-	printf("PHILO %d is eating\n", ph->philo->pos);
-	pthread_mutex_init(&ph->fork_left, NULL);
-	pthread_mutex_init(&ph->fork_right, NULL);
-	while (i <= ph->n_of_philo)
+	ph->time_to_eat = ft_atoi(argv[3]);
+	// ph->time_to_sleep = ft_atoi(argv[4]);
+	// if (argc == 6)
+	// 	ph->n_of_ph_m_eat = ft_atoi(argv[5]);
+	forks(ph);
+	while (i < ph->n_of_philo)
 	{
-		ph->philo[i].eat = 0;
-		ph->philo[i].sleep = 0;
-		ph->philo[i].think = 0;
+		ph->philo_s[i].eat = 0;
+		ph->philo_s[i].sleep = 0;
+		ph->philo_s[i].think = 0;
 		i++;
 	}
 }
@@ -33,18 +44,18 @@ int	main(int argc, char **argv)
 		int	i;
 
 		ph = malloc(sizeof(t_philo));
+		ph->philo = malloc(sizeof(pthread_t) * ft_atoi(argv[1]));
 		p_assigment(ph, argv);
-		printf("NUMBER OF PHILO : %d\n", ph->n_of_philo);
-
 		i = 0;
-		while (i <= ph->n_of_philo)
+		while (i < ph->n_of_philo)
 		{
-			pthread_create(&ph->philo[i].id, NULL, &work, &ph);
+			ph->philo_s->pos = i;
+			pthread_create(&ph->philo[i], NULL, &work, (void *)&ph->philo[i]);
 			i++;
 		}
 		i = 0;
 		while (i++ < ph->n_of_philo)
-			pthread_join(ph->philo[i].id, NULL);
+			pthread_join(ph->philo[i], NULL);
 		printf("end\n");
 	}
 	return (0);

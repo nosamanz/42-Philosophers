@@ -1,13 +1,23 @@
 #include "philo.h"
 
-void	thinking(t_philo *ph)
+void	take_fork(t_philo *ph)
 {
-	printf("thinking\n");
+	printf("taking fork\n");
+	//pthread_mutex_lock();
+	//pthread_mutex_lock();
 }
 
 void	eating(t_philo *ph)
 {
-	printf("PHILO %d is eating\n", ph->philo->pos);
+	take_fork(ph);
+	printf("PHILO is eating\n");
+	usleep(ph->time_to_die);
+	printf("PHILO is ate\n");
+}
+
+void	thinking(t_philo *ph)
+{
+	printf("thinking\n");
 }
 
 void	sleeping(t_philo *ph)
@@ -18,25 +28,17 @@ void	sleeping(t_philo *ph)
 void	*work(void *ph_ptr)
 {
 	t_philo *ph;
-	long	time;
+	int	time = 0;
 	int	i = 0;
 
 	ph = (t_philo *)ph_ptr;
-	ph->philo->pos = 1;
-	printf("PHILO %d is eating\n", ph->philo->pos);
-	ph->philo->last_eat = get_time(0);
+	time = get_time(time);
+	//printf("FIRST TIME %d\n", time);
 	while (1)
 	{
-		// if (time >= ph->time_to_die)
-		// {
-		// 	printf("OLDU\n");
-		// 	exit(1);
-		// }
-		time = get_time(time);
-		//thinking(ph);
+		//printf("Other TIME %ld\n", get_time(time));
 		eating(ph);
-		ph->philo->pos = 1 + ph->philo->pos;
-		//sleeping(ph);
+		pause();
 	}
 	return(NULL);
 }

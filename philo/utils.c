@@ -1,6 +1,6 @@
 #include "philo.h"
 
-long	get_time(time)
+long	get_time(int time)
 {
 	struct timeval	tv;
 	long			now;
