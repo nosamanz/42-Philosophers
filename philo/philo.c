@@ -1,62 +1,68 @@
 #include "philo.h"
 
-void	forks(t_philo *ph)
+void	forks(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	ph->fork = malloc(sizeof(pthread_t) * ph->n_of_philo);
-	while (i < ph->n_of_philo)
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->n_of_philo);
+	while (i < data->n_of_philo)
 	{
-		pthread_mutex_init(&ph->fork[i], NULL);
+		pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
 }
 
-void	p_assigment(t_philo *ph, char **argv)
+void	p_assigment(t_data *data, int argc, char **argv)
 {
 	int i;
-
 	i = 0;
-	ph->n_of_philo = ft_atoi(argv[1]);
-	printf("n_of philo %d\n", ph->n_of_philo);
-	ph->philo_s = malloc(sizeof(t_philo) * ph->n_of_philo);// filozof sayisi kadar liste (status)
-	ph->time_to_die = ft_atoi(argv[2]);
-	ph->time_to_eat = ft_atoi(argv[3]);
-	// ph->time_to_sleep = ft_atoi(argv[4]);
-	// if (argc == 6)
-	// 	ph->n_of_ph_m_eat = ft_atoi(argv[5]);
-	forks(ph);
-	while (i < ph->n_of_philo)
+
+	data->n_of_philo = ft_atoi(argv[1]);
+	data->philo = malloc(sizeof(t_philos) * data->n_of_philo);
+	printf("Number of Philo %d\n", data->n_of_philo);
+	data->time_to_die = ft_atoi(argv[2]);
+	data->time_to_eat = ft_atoi(argv[3]);
+	data->aten = 0;
+	data->time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		data->n_of_ph_m_eat = ft_atoi(argv[5]);
+	forks(data);
+	i = 0;
+	while (i < data->n_of_philo)
 	{
-		ph->philo_s[i].eat = 0;
-		ph->philo_s[i].sleep = 0;
-		ph->philo_s[i].think = 0;
+		data->philo[i].data = data;
+		data->philo[i].id = i + 1;
+		data->philo[i].r_fork = i;
+		data->philo[i].l_fork = i + 1;
 		i++;
 	}
+	data->philo[i].data = data;
+	data->philo[i].id = i + 1;
+	data->philo[i].l_fork = i;
+	data->philo[i].r_fork = 0;
 }
 
 int	main(int argc, char **argv)
 {
 	if (argc > 1)
 	{
-		t_philo	*ph;
+		t_data	*data;
 		int	i;
 
-		ph = malloc(sizeof(t_philo));
-		ph->philo = malloc(sizeof(pthread_t) * ft_atoi(argv[1]));
-		p_assigment(ph, argv);
+		data = malloc(sizeof(t_data));
+		data->threads = malloc(sizeof(pthread_t) * ft_atoi(argv[1]));
+		p_assigment(data, argc, argv);
 		i = 0;
-		while (i < ph->n_of_philo)
+		while (i < data->n_of_philo)
 		{
-			ph->philo_s->pos = i;
-			pthread_create(&ph->philo[i], NULL, &work, (void *)&ph->philo[i]);
+			pthread_create(&data->threads[i], NULL, &work, &data->philo[i]);
 			i++;
 		}
 		i = 0;
-		while (i++ < ph->n_of_philo)
-			pthread_join(ph->philo[i], NULL);
-		printf("end\n");
+		while (i++ < data->n_of_philo)
+			pthread_join(data->threads[i], NULL);
+		printf("the end\n");
 	}
 	return (0);
 }

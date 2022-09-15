@@ -7,34 +7,34 @@
 # include <pthread.h>
 # include <sys/time.h>
 
+typedef	struct	s_data t_data;
 
-typedef struct	s_status
+typedef struct s_philos
 {
-	long	last_eat;
-	int		eat;
-	int		sleep;
-	int		think;
-	int		pos;
-}				t_status;
+	int l_fork;
+	int r_fork;
+	int id;
+	long long int last_eat;
+	t_data	*data;
+} 	t_philos;
 
-typedef	struct	s_philo
+typedef	struct	s_data
 {
-	pthread_t	*philo;
-	pthread_mutex_t	*fork;
-	int	left_fork;
-	int right_fork;
-	int	first_time;
+	pthread_mutex_t	*forks;
+	pthread_t	*threads;
 	int	n_of_philo;
 	int	time_to_die;
 	int	time_to_eat;
 	int	time_to_sleep;
 	int	n_of_ph_m_eat;
-	t_status	*philo_s;
-}			t_philo;
+	int	aten;
+	long long int start_time;
+	t_philos	*philo;
+}			t_data;
 
 
 int	ft_atoi(const char *str);
 void	*work(void *ph_ptr);
-long	get_time(int time);
+long	get_time();
 
 #endif
