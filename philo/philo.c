@@ -21,9 +21,9 @@ void	p_assigment(t_data *data, int argc, char **argv)
 	data->n_of_philo = ft_atoi(argv[1]);
 	data->philo = malloc(sizeof(t_philos) * data->n_of_philo);
 	printf("Number of Philo %d\n", data->n_of_philo);
+	pthread_mutex_init(&data->msg, NULL);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
-	data->aten = 0;
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->n_of_ph_m_eat = ft_atoi(argv[5]);
@@ -35,17 +35,19 @@ void	p_assigment(t_data *data, int argc, char **argv)
 		data->philo[i].id = i + 1;
 		data->philo[i].r_fork = i;
 		data->philo[i].l_fork = i + 1;
+		data->philo[i].aten = 0;
 		i++;
 	}
 	data->philo[i].data = data;
 	data->philo[i].id = i + 1;
 	data->philo[i].l_fork = i;
 	data->philo[i].r_fork = 0;
+	data->philo[i].aten = 0;
 }
 
 int	main(int argc, char **argv)
 {
-	if (argc > 1)
+	if (argc > 1 && argc <= 6)
 	{
 		t_data	*data;
 		int	i;
@@ -63,6 +65,11 @@ int	main(int argc, char **argv)
 		while (i++ < data->n_of_philo)
 			pthread_join(data->threads[i], NULL);
 		printf("the end\n");
+	}
+	else
+	{
+		error("Arg Error!");
+		return (0);
 	}
 	return (0);
 }

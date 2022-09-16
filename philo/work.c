@@ -20,13 +20,12 @@ void	take_fork(t_philos *philo, t_data *data)
 void	eating(t_philos *philo, t_data *data)
 {
 	take_fork(philo, data);
-	printf("Philo[%d] is eating 🍜\n", philo->id);
-	usleep(data->time_to_eat * 1000);
 	philo->last_eat = get_time();
-	printf("TIME: [%lld] Philo[%d] is ate\n", philo->last_eat - data->start_time, philo->id);
+	msg("eating 🍜", philo);
+	my_sleep(data->time_to_eat);
 	pthread_mutex_unlock(&data->forks[philo->r_fork]);
 	pthread_mutex_unlock(&data->forks[philo->l_fork]);
-	data->aten++;
+	philo->aten++;
 }
 
 void	thinking(t_philos *philo, t_data *data)
@@ -38,7 +37,7 @@ void	sleeping(t_philos *philo, t_data *data)
 {
 	long long int time = 0;
 	time = get_time();
-	printf("TIME: [%lld] Philo[%d] is sleeping\n", time - data->start_time, philo->id);
+	printf("TIME: [%lld] Philo[%d] is sleeping 💤\n", time - data->start_time, philo->id);
 	usleep(data->time_to_sleep);
 }
 
@@ -49,11 +48,13 @@ void	*work(void *ph_ptr)
 
 	philo = (t_philos *)ph_ptr;
 	data = philo->data;
-	if (philo->id % 2 == 0)
-		usleep(data->time_to_eat);
 	data->start_time = get_time();
+	if (philo->id % 2 == 0)
+		my_sleep(data->time_to_eat);
 	while (1)
 	{
+		if (philo->aten == data->n_of_ph_m_eat)
+			break;
 		eating(philo, data);
 		sleeping(philo, data);
 		thinking(philo, data);
