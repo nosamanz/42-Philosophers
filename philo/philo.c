@@ -22,6 +22,7 @@ void	p_assigment(t_data *data, int argc, char **argv)
 	data->philo = malloc(sizeof(t_philos) * data->n_of_philo);
 	printf("Number of Philo %d\n", data->n_of_philo);
 	pthread_mutex_init(&data->msg, NULL);
+	pthread_mutex_init(&data->m_die, NULL);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
@@ -36,6 +37,7 @@ void	p_assigment(t_data *data, int argc, char **argv)
 		data->philo[i].r_fork = i;
 		data->philo[i].l_fork = i + 1;
 		data->philo[i].aten = 0;
+		data->philo[i].is_life = 1;
 		i++;
 	}
 	data->philo[i].data = data;
@@ -43,6 +45,8 @@ void	p_assigment(t_data *data, int argc, char **argv)
 	data->philo[i].l_fork = i;
 	data->philo[i].r_fork = 0;
 	data->philo[i].aten = 0;
+	data->philo[i].is_life = 1;
+	data->die = 0;
 }
 
 int	main(int argc, char **argv)
@@ -61,15 +65,22 @@ int	main(int argc, char **argv)
 			pthread_create(&data->threads[i], NULL, &work, &data->philo[i]);
 			i++;
 		}
+		while (data->die == 0 && aten(data, data->philo) == 0)
+		{
+			
+			if (data->die != 0)
+			{
+				write(1, "FREE\n", 5);
+				ft_free(data);
+				return (0);
+			}
+		}
 		i = 0;
 		while (i++ < data->n_of_philo)
 			pthread_join(data->threads[i], NULL);
 		printf("the end\n");
 	}
 	else
-	{
 		error("Arg Error!");
-		return (0);
-	}
 	return (0);
 }
