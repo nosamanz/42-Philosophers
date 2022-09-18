@@ -67,7 +67,7 @@ int	main(int argc, char **argv)
 		}
 		while (data->die == 0 && aten(data, data->philo) == 0)
 		{
-			
+			is_dead(data);
 			if (data->die != 0)
 			{
 				write(1, "FREE\n", 5);
