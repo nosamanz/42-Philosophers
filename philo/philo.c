@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void	forks(t_data *data)
+void	mutex_init(t_data *data)
 {
 	int	i;
 
@@ -11,6 +11,18 @@ void	forks(t_data *data)
 		pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
+	pthread_mutex_init(&data->msg, NULL);
+	pthread_mutex_init(&data->m_die, NULL);
+}
+
+void	last_philo(t_data *data, int i)
+{
+	data->philo[i].data = data;
+	data->philo[i].id = i + 1;
+	data->philo[i].l_fork = i;
+	data->philo[i].r_fork = 0;
+	data->philo[i].aten = 0;
+	data->philo[i].is_life = 1;
 }
 
 void	p_assigment(t_data *data, int argc, char **argv)
@@ -20,15 +32,13 @@ void	p_assigment(t_data *data, int argc, char **argv)
 
 	data->n_of_philo = ft_atoi(argv[1]);
 	data->philo = malloc(sizeof(t_philos) * data->n_of_philo);
-	printf("Number of Philo %d\n", data->n_of_philo);
-	pthread_mutex_init(&data->msg, NULL);
-	pthread_mutex_init(&data->m_die, NULL);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
+	data->die = 0;
 	if (argc == 6)
 		data->n_of_ph_m_eat = ft_atoi(argv[5]);
-	forks(data);
+	mutex_init(data);
 	i = 0;
 	while (i < data->n_of_philo && data->n_of_philo > 1)
 	{
@@ -40,13 +50,7 @@ void	p_assigment(t_data *data, int argc, char **argv)
 		data->philo[i].is_life = 1;
 		i++;
 	}
-	data->philo[i].data = data;
-	data->philo[i].id = i + 1;
-	data->philo[i].l_fork = i;
-	data->philo[i].r_fork = 0;
-	data->philo[i].aten = 0;
-	data->philo[i].is_life = 1;
-	data->die = 0;
+	last_philo(data, i);
  }
 
 int	main(int argc, char **argv)
@@ -54,35 +58,13 @@ int	main(int argc, char **argv)
 	if (argc > 1 && argc <= 6)
 	{
 		t_data	*data;
-		int	i;
 
+		if (arg_check(argv) != 0)
+			return (0);
 		data = malloc(sizeof(t_data));
 		data->threads = malloc(sizeof(pthread_t) * ft_atoi(argv[1]));
 		p_assigment(data, argc, argv);
-		i = 0;
-		while (i < data->n_of_philo)
-		{
-			pthread_create(&data->threads[i], NULL, work, &data->philo[i]);
-			i++;
-		}
-		while (data->die == 0 || aten(data, data->philo) == 0)
-		{
-			if (dead(data) == 0 || aten(data, data->philo) == 0)
-			{
-				ft_free(data);
-				return (0);
-			}
-			// if (data->die != 0)
-			// {
-			// 	write(1, "FREE\n", 5);
-			// 	ft_free(data);
-			// 	return (0);
-			// }
-		}
-		i = 0;
-		while (i++ < data->n_of_philo)
-			pthread_join(data->threads[i], NULL);
-		printf("the end\n");
+		thread_f(data);
 	}
 	else
 		error("Arg Error!");

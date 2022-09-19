@@ -9,6 +9,16 @@ long	get_time()
 	return(time);
 }
 
+void ft_free(t_data *data)
+{
+	int i = 0;
+	while (i < data->n_of_philo)
+	{
+		pthread_detach(data->threads[i]);
+		i++;
+	}
+}
+
 int	ft_atoi(const char *str)
 {
 	int	i;

@@ -38,11 +38,12 @@ typedef	struct	s_data
 
 
 int		ft_atoi(const char *str);
+int		arg_check(char **argv);
+int		thread_f(t_data *data);
 void	*work(void *ph_ptr);
 long	get_time();
 void	error(char *str);
 void	msg(long long time, char *str, t_philos *philo);
-//int	check(t_philos *philo, t_data *data);
 void 	ft_free(t_data *data);
 int		aten(t_data *data, t_philos *philo);
 int		dead(t_data *data);

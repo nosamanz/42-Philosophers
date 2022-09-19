@@ -30,12 +30,41 @@ int	aten(t_data *data, t_philos *philo)
 	return (0);
 }
 
-void ft_free(t_data *data)
+int	is_arg_zero(char c)
 {
-	int i = 0;
-	while (i < data->n_of_philo)
+	if (c == '0')
 	{
-		pthread_detach(data->threads[i]);
+		printf("Arg must be greater than 0\n");
+		return (1);
+	}
+	return (0);
+}
+
+int	arg_check(char **argv)
+{
+	int i;
+	int j;
+
+	i = 1;
+	j = 0;
+	while (argv[i][j])
+	{
+		if (is_arg_zero(argv[i][j]))
+			return (1);
+		while (argv[i][j])
+		{
+			if (argv[i][j] >= '0' && argv[i][j] <= '9')
+				j++;
+			else if (argv[i][j] == '+')
+				j++;
+			else
+			{
+				printf("Arg Error! Arg is not number or is not a positive\n");
+				return (1);
+			}
+		}
+		j = 0;
 		i++;
 	}
+	return (0);
 }
