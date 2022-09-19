@@ -11,10 +11,16 @@ void	my_sleep(long long time)
 
 void	take_fork(t_philos *philo, t_data *data)
 {
-	msg(get_time() ,"taking fork left 🥢", philo);
-	pthread_mutex_lock(&data->forks[philo->l_fork]);
-	msg(get_time() ,"taking fork right 🥢", philo);
 	pthread_mutex_lock(&data->forks[philo->r_fork]);
+	msg(get_time() ,"taking fork right 🥢", philo);
+	if (data->n_of_philo == 1)
+	{
+		my_sleep(data->time_to_die);
+		msg(get_time(), "💀 DIED 💀", philo);
+		data->die++;
+	}
+	pthread_mutex_lock(&data->forks[philo->l_fork]);
+	msg(get_time() ,"taking fork left 🥢", philo);
 }
 
 void	eating(t_philos *philo, t_data *data)
@@ -51,17 +57,12 @@ void	*work(void *ph_ptr)
 		my_sleep(data->time_to_eat);
 	while (data->die == 0 && aten(data, philo) == 0)
 	{
-		// if (get_time() - philo->last_eat > data->time_to_die && philo->last_eat > 0)
-		// {
-		// 	time = get_time();
-		// 	msg(time, "DEAD\n\n\n", philo);
-		// 	data->philo->is_life = 0;
-		// 	data->die++;
-		// 	break;
-		// }
-		eating(philo, data);
-		sleeping(philo, data);
-		thinking(philo, data);
+		if (aten(data, philo) == 0)
+			eating(philo, data);
+		if (aten(data, philo) == 0)
+			sleeping(philo, data);
+		if (aten(data, philo) == 0)
+			thinking(philo, data);
 	}
 	return(NULL);
 }

@@ -30,7 +30,7 @@ void	p_assigment(t_data *data, int argc, char **argv)
 		data->n_of_ph_m_eat = ft_atoi(argv[5]);
 	forks(data);
 	i = 0;
-	while (i < data->n_of_philo)
+	while (i < data->n_of_philo && data->n_of_philo > 1)
 	{
 		data->philo[i].data = data;
 		data->philo[i].id = i + 1;
@@ -47,7 +47,7 @@ void	p_assigment(t_data *data, int argc, char **argv)
 	data->philo[i].aten = 0;
 	data->philo[i].is_life = 1;
 	data->die = 0;
-}
+ }
 
 int	main(int argc, char **argv)
 {
@@ -62,18 +62,22 @@ int	main(int argc, char **argv)
 		i = 0;
 		while (i < data->n_of_philo)
 		{
-			pthread_create(&data->threads[i], NULL, &work, &data->philo[i]);
+			pthread_create(&data->threads[i], NULL, work, &data->philo[i]);
 			i++;
 		}
-		while (data->die == 0 && aten(data, data->philo) == 0)
+		while (data->die == 0 || aten(data, data->philo) == 0)
 		{
-			is_dead(data);
-			if (data->die != 0)
+			if (dead(data) == 0 || aten(data, data->philo) == 0)
 			{
-				write(1, "FREE\n", 5);
 				ft_free(data);
 				return (0);
 			}
+			// if (data->die != 0)
+			// {
+			// 	write(1, "FREE\n", 5);
+			// 	ft_free(data);
+			// 	return (0);
+			// }
 		}
 		i = 0;
 		while (i++ < data->n_of_philo)
