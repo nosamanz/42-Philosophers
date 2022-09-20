@@ -3,7 +3,6 @@
 int	thread_f(t_data *data)
 {
 	int i;
-
 	i = 0;
 	while (i < data->n_of_philo)
 	{
@@ -12,8 +11,12 @@ int	thread_f(t_data *data)
 	}
 	while (data->die == 0 || aten(data, data->philo) == 0)
 	{
-		if (dead(data) == 0 || aten(data, data->philo) == 0)
+		dead(data);
+		if (aten(data, data->philo) == 1)
+			return (0);
+		if (data->die != 0)
 		{
+			write(1, "FREE\n", 5);
 			ft_free(data);
 			return (0);
 		}

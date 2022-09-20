@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/20 15:06:53 by oozcan            #+#    #+#             */
+/*   Updated: 2022/09/20 17:31:51 by oozcan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	mutex_init(t_data *data)
@@ -12,7 +24,6 @@ void	mutex_init(t_data *data)
 		i++;
 	}
 	pthread_mutex_init(&data->msg, NULL);
-	pthread_mutex_init(&data->m_die, NULL);
 }
 
 void	last_philo(t_data *data, int i)
@@ -55,12 +66,15 @@ void	p_assigment(t_data *data, int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	if (argc > 1 && argc <= 6)
+	if (argc == 5 || argc == 6)
 	{
 		t_data	*data;
 
-		if (arg_check(argv) != 0)
+		if (!arg_check(argc, argv))
+		{
+			error("Arg Error! Invalid Arg");
 			return (0);
+		}
 		data = malloc(sizeof(t_data));
 		data->threads = malloc(sizeof(pthread_t) * ft_atoi(argv[1]));
 		p_assigment(data, argc, argv);

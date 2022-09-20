@@ -38,7 +38,7 @@ typedef	struct	s_data
 
 
 int		ft_atoi(const char *str);
-int		arg_check(char **argv);
+int		arg_check(int argc, char **argv);
 int		thread_f(t_data *data);
 void	*work(void *ph_ptr);
 long	get_time();
