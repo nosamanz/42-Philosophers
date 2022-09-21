@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/21 12:19:29 by oozcan            #+#    #+#             */
+/*   Updated: 2022/09/21 13:02:26 by oozcan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 long	get_time()
@@ -15,8 +27,12 @@ void ft_free(t_data *data)
 	while (i < data->n_of_philo)
 	{
 		pthread_detach(data->threads[i]);
+		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
+	pthread_mutex_destroy(&data->msg);
+	free(data->philo);
+	free(data);
 }
 
 int	ft_atoi(const char *str)
