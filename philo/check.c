@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:50 by oozcan            #+#    #+#             */
-/*   Updated: 2022/09/21 13:40:35 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/09/24 14:35:20 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,13 @@ int	aten(t_data *data, t_philos *philo)
 {
 	if (philo->aten == data->n_of_ph_m_eat && data->n_of_ph_m_eat > 0)
 	{
-		return (1);
+		data->total_eat++;
+		if (data->total_eat == data->n_of_ph_m_eat)
+		{
+			printf("tum philolar yedi\n");
+			return (1);
+		}
+		return (0);
 	}
 	return (0);
 }
