@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:36 by oozcan            #+#    #+#             */
-/*   Updated: 2022/09/26 16:32:54 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/09/26 17:16:03 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_philos
 	int id;
 	int	aten;
 	long long int last_eat;
-	int	is_life;
 	int	time_to_die;
 	long long int	start_time;
 	t_data	*data;

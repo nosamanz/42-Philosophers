@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:06:53 by oozcan            #+#    #+#             */
-/*   Updated: 2022/09/26 16:28:53 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/09/26 17:16:13 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	last_philo(t_data *data, int i)
 	data->philo[i].l_fork = 0;
 	data->philo[i].r_fork = i;
 	data->philo[i].aten = 0;
-	data->philo[i].is_life = 1;
 }
 
 void	p_assigment(t_data *data, int argc, char **argv)
@@ -60,7 +59,6 @@ void	p_assigment(t_data *data, int argc, char **argv)
 		data->philo[i].r_fork = i;
 		data->philo[i].l_fork = i + 1;
 		data->philo[i].aten = 0;
-		data->philo[i].is_life = 1;
 		i++;
 	}
 	last_philo(data, i);
