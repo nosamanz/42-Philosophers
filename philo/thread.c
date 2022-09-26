@@ -30,7 +30,6 @@ int	thread_f(t_data *data)
 			return (0);
 		if (data->die != 0 || data->n_of_philo == 1)
 		{
-			usleep(400);
 			ft_free(data);
 			break;
 		}
