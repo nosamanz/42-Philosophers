@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:06:53 by oozcan            #+#    #+#             */
-/*   Updated: 2022/09/24 14:32:59 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/09/26 16:28:53 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ void	mutex_init(t_data *data)
 		i++;
 	}
 	pthread_mutex_init(&data->msg, NULL);
+	pthread_mutex_init(&data->m_data, NULL);
 }
 
 void	last_philo(t_data *data, int i)
 {
 	data->philo[i].data = data;
 	data->philo[i].id = i + 1;
-	data->philo[i].l_fork = i;
-	data->philo[i].r_fork = 0;
+	data->philo[i].l_fork = 0;
+	data->philo[i].r_fork = i;
 	data->philo[i].aten = 0;
 	data->philo[i].is_life = 1;
 }
@@ -52,7 +53,7 @@ void	p_assigment(t_data *data, int argc, char **argv)
 		data->n_of_ph_m_eat = ft_atoi(argv[5]);
 	mutex_init(data);
 	i = 0;
-	while (i < data->n_of_philo && data->n_of_philo > 1)
+	while (i < data->n_of_philo - 1 && data->n_of_philo > 1)
 	{
 		data->philo[i].data = data;
 		data->philo[i].id = i + 1;

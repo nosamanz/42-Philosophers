@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:17 by oozcan            #+#    #+#             */
-/*   Updated: 2022/09/21 14:00:12 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/09/25 18:19:09 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,8 @@
 
 void	msg(long long time, char *str, t_philos *philo)
 {
-	long long int	tm;
-
-	tm = 0;
 	pthread_mutex_lock(&philo->data->msg);
-	if (philo->data->die > 0)
-		return;
-	tm = time - philo->data->start_time;
-	if (tm >= 0)
-		printf("TIME: [%lld] Philo[%d], %s\n", time - philo->data->start_time, philo->id, str);
+	printf("TIME: [%lld] Philo[%d], %s\n", get_time() - philo->start_time, philo->id, str);
 	pthread_mutex_unlock(&philo->data->msg);
 }
 

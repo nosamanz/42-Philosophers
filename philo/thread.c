@@ -15,9 +15,11 @@
 int	thread_f(t_data *data)
 {
 	int i;
+
 	i = 0;
 	while (i < data->n_of_philo)
 	{
+		data->philo[i].start_time = get_time();
 		pthread_create(&data->threads[i], NULL, work, &data->philo[i]);
 		i++;
 	}
@@ -26,16 +28,15 @@ int	thread_f(t_data *data)
 		dead(data);
 		if (aten(data, data->philo) == 1)
 			return (0);
-		if (data->die != 0)
+		if (data->die != 0 || data->n_of_philo == 1)
 		{
-			write(1, "FREE\n", 5);
+			usleep(400);
 			ft_free(data);
-			return (0);
+			break;
 		}
 	}
 	i = 0;
 	while (i++ < data->n_of_philo)
 		pthread_join(data->threads[i], NULL);
-	printf("The End\n");
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:29 by oozcan            #+#    #+#             */
-/*   Updated: 2022/09/21 13:02:26 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/09/25 17:00:41 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,21 @@ long	get_time()
 	return(time);
 }
 
+void	my_sleep(long long time)
+{
+	long long	now;
+
+	now = get_time();
+	while (get_time() - now < time)
+		usleep(100);
+}
+
 void ft_free(t_data *data)
 {
 	int i = 0;
 	while (i < data->n_of_philo)
 	{
 		pthread_detach(data->threads[i]);
-		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
 	pthread_mutex_destroy(&data->msg);
