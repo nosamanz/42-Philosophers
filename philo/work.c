@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:25 by oozcan            #+#    #+#             */
-/*   Updated: 2022/09/27 13:48:53 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/09/27 17:49:44 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ void	take_fork(t_philos *philo, t_data *data)
 	pthread_mutex_lock(&data->forks[philo->r_fork]);
 	msg(get_time() ,"taking fork right 🥢", philo);
 	pthread_mutex_lock(&data->forks[philo->l_fork]);
-	msg(get_time() ,"taking fork left 🥢", philo);
+	if (lc_check(data))
+		msg(get_time() ,"taking fork left 🥢", philo);
 }
 
 void	eating(t_philos *philo, t_data *data)
 {
 	take_fork(philo, data);
-	msg(get_time() ,"eating 🍜", philo);
+	if (lc_check(data))
+		msg(get_time() ,"eating 🍜", philo);
 	pthread_mutex_lock(&data->m_data);
 	last_eat(philo);
 	pthread_mutex_unlock(&data->m_data);
