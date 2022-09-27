@@ -1,15 +1,15 @@
 CC = gcc
-#CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 RACEFLAG = -g -fsanitize=thread
 NAME = philo
-SRCS = *.c
+SRCS = philo-mandatory/*.c
 
 all : $(NAME)
 
-$(NAME):
-	$(CC) $(SRCS) -o $(NAME)
+$(NAME): $(SRCS)
+	$(CC) $(SRCS) $(CFLAGS) -o $(NAME)
 
-race :
+race : $(SRCS)
 	$(CC) $(SRCS) $(RACEFLAG) -o $(NAME)_race
 
 clean :
@@ -19,5 +19,3 @@ fclean : clean
 	rm -rf $(NAME)_race
 
 re : clean all
-
-#WINDOWS COMPILE gcc -g -pthread *.c -o philo

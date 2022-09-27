@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:50 by oozcan            #+#    #+#             */
-/*   Updated: 2022/09/27 17:44:57 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/09/27 18:19:56 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int	dead(t_data *data)
 	while (i < data->n_of_philo)
 	{
 		pthread_mutex_lock(&data->m_data);
-		if (data->philo[i].last_eat != 0 && (get_time() - data->philo[i].last_eat) > data->time_to_die
+		if ((data->philo[i].last_eat != 0 && (get_time() - data->philo[i].last_eat) > data->time_to_die)
 						|| (data->n_of_philo == 1))
 		{
 			if (data->n_of_philo == 1)
 			{
 				pthread_mutex_unlock(&data->m_data);
-				my_sleep(5);
+				my_sleep(data->time_to_die);
 				msg(get_time(), "💀 DIED 💀", data->philo);
 				return (0);
 			}

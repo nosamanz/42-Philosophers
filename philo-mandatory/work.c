@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:25 by oozcan            #+#    #+#             */
-/*   Updated: 2022/09/27 17:49:44 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/09/27 18:10:11 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	eating(t_philos *philo, t_data *data)
 	pthread_mutex_unlock(&data->forks[philo->l_fork]);
 }
 
-void	thinking(t_philos *philo, t_data *data)
+void	thinking(t_philos *philo)
 {
 	msg(get_time() ,"thinking", philo);
 }
@@ -60,7 +60,7 @@ void	*work(void *ph_ptr)
 		if (lc_check(data))
 			sleeping(philo, data);
 		if (lc_check(data))
-			thinking(philo, data);
+			thinking(philo);
 	}
 	return(NULL);
 }
