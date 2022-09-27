@@ -29,13 +29,11 @@ int	thread_f(t_data *data)
 		if (aten(data, data->philo) == 1)
 			return (0);
 		if (data->die != 0 || data->n_of_philo == 1)
-		{
-			ft_free(data);
 			break;
-		}
 	}
 	i = 0;
 	while (i++ < data->n_of_philo)
 		pthread_join(data->threads[i], NULL);
+	ft_free(data);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:29 by oozcan            #+#    #+#             */
-/*   Updated: 2022/09/25 17:00:41 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/09/27 11:35:23 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void ft_free(t_data *data)
 		pthread_detach(data->threads[i]);
 		i++;
 	}
-	pthread_mutex_destroy(&data->msg);
-	free(data->philo);
-	free(data);
+	//pthread_mutex_destroy(&data->msg);
+	//free(data->philo);
+	//free(data);
 }
 
 int	ft_atoi(const char *str)

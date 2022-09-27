@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:25 by oozcan            #+#    #+#             */
-/*   Updated: 2022/09/26 16:31:04 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/09/27 13:48:53 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	*work(void *ph_ptr)
 	data = philo->data;
 	if (philo->id % 2 == 0)
 		my_sleep(data->time_to_eat);
-	while (1)
+	while (lc_check(data))
 	{
 		eating(philo, data);
 		if (lc_check(data))
