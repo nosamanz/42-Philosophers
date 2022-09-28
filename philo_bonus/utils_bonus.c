@@ -9,6 +9,15 @@ long	get_time()
 	return(time);
 }
 
+void	my_sleep(long long time)
+{
+	long long	now;
+
+	now = get_time();
+	while (get_time() - now < time)
+		usleep(100);
+}
+
 int	ft_atoi(const char *str)
 {
 	int	i;

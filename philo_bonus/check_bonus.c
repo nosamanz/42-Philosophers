@@ -1,5 +1,32 @@
 #include "philo_bonus.h"
 
+void	*dead_check(void *ptr)
+{
+	t_philos *philo;
+
+	philo = (t_philos *)ptr;
+	while (1)
+	{
+		if (get_time() - philo->last_eat > philo->data->time_to_die && philo->last_eat != 0)
+		{
+			printf("HELLO\n");
+			msg(get_time(), "DEAD", philo);
+			//sem_wait(philo->data->sem_death);
+			philo->data->die = 1;
+			//sem_post(philo->data->sem_death);
+			//exit(1);
+		}
+		if (philo->data->die)
+			break;
+	}
+	return NULL;
+}
+
+// int	lc_check(t_philos *philo)
+// {
+
+// }
+
 int	is_arg_zero(char c)
 {
 	if (c == '0')
