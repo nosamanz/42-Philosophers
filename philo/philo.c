@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:06:53 by oozcan            #+#    #+#             */
-/*   Updated: 2022/09/27 13:53:41 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/09/28 12:38:41 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	p_assigment(t_data *data, int argc, char **argv)
 	data->time_to_sleep = ft_atoi(argv[4]);
 	data->total_eat = 0;
 	data->die = 0;
+	data->n_of_ph_m_eat = -1;
 	if (argc == 6)
 		data->n_of_ph_m_eat = ft_atoi(argv[5]);
 	mutex_init(data);
