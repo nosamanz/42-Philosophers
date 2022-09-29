@@ -18,6 +18,9 @@ race : $(SRCS)
 bonus : $(BONUS)
 	$(CC) $(BONUS) $(CFLAGS) -o $(B_NAME)
 
+bonusrace : $(BONUS)
+	$(CC) $(BONUS) $(RACEFLAG) -o bonus_race
+
 clean :
 	rm $(NAME)
 

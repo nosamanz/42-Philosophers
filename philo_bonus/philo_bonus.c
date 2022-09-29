@@ -4,11 +4,10 @@ void	sem(t_data *data)
 {
 	sem_unlink("/sem");
 	sem_unlink("/msg");
-	//sem_unlink("/death");
-	printf("%d\n", data->n_of_philo);
-	data->sem_forks = sem_open("/forks", O_CREAT, S_IRWXU, data->n_of_philo);
-	data->sem_msg = sem_open("/msg", O_CREAT, S_IRWXU, 1);
-	//data->sem_death = sem_open("/death", O_CREAT, S_IRWXU, 1);
+	sem_unlink("/death");
+	data->sem_forks = sem_open("/forks", O_CREAT | S_IRWXU, data->n_of_philo);
+	data->sem_msg = sem_open("/msg", O_CREAT | S_IRWXU, 1);
+	data->sem_death = sem_open("/death", O_CREAT | S_IRWXU, 1);
 }
 
 void	p_assigment(t_data *data, int argc, char ** argv)
@@ -54,6 +53,6 @@ int main(int argc,char **argv)
 	}
 	else
 		error("Arg Error!");
-	exit(1);
+	printf("THE END\n");
 	return (0);
 }

@@ -4,11 +4,13 @@
 #include <semaphore.h>
 #include <pthread.h>
 #include <fcntl.h>
+#include <signal.h>
 #include <sys/time.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
 
 
 typedef struct s_data t_data;
@@ -29,7 +31,7 @@ typedef struct s_data
 	t_philos *philo;
 	sem_t	*sem_forks;
 	sem_t	*sem_msg;
-	//sem_t	*sem_death;
+	sem_t	*sem_death;
 	int	n_of_philo;
 	int	time_to_die;
 	int	time_to_eat;
@@ -51,5 +53,7 @@ void	sem(t_data *data);
 void	last_eat(t_philos *philo);
 void	my_sleep(long long time);
 void	*dead_check(void *ptr);
+int		lc_check(t_philos *philo);
+void	kill_them_all(t_data *data);
 
 #endif

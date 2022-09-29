@@ -8,7 +8,7 @@ void	kill_them_all(t_data *data)
 	waitpid(-1, &r_val, 0);//////////////////////////////
 	if (r_val != 0)
 	{
-		printf("seni gidi\n");
+		i = 0;
 		while (i < data->n_of_philo)
 		{
 			kill(data->philo[i].pid, 15);
