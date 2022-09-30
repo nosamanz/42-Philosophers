@@ -7,23 +7,28 @@ void	*dead_check(void *ptr)
 	philo = (t_philos *)ptr;
 	while (1)
 	{
-		if (get_time() - philo->last_eat > philo->data->time_to_die && philo->last_eat != 0 && philo->data->die <= 1)
+		sem_wait(philo->data->sem_eat);
+		if ((get_time() - philo->last_eat) > philo->data->time_to_die && philo->last_eat != 0)
 		{
-			philo->data->die++;
 			sem_wait(philo->data->sem_death);
-			my_sleep(5);
-			msg(get_time(), "DEAD", philo);
-			sem_post(philo->data->sem_death);
+			my_sleep(3);
+			msg(get_time(), "DEADDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD", philo);
 			exit(1);
 		}
+		sem_post(philo->data->sem_eat);
+		if (philo->data->die)
+			break;
 	}
 	return NULL;
 }
 
 int	lc_check(t_philos *philo)
 {
-	if (get_time() - philo->last_eat > philo->data->time_to_die && philo->last_eat != 0)
+	if ((get_time() - philo->last_eat) > philo->data->time_to_die && philo->last_eat != 0)
 	{
+		sem_wait(philo->data->sem_death);
+		philo->data->die++;
+		sem_post(philo->data->sem_death);
 		return (0);
 	}
 	return (1);

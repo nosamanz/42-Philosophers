@@ -27,44 +27,5 @@ void	my_sleep(long long time)
 
 	now = get_time();
 	while (get_time() - now < time)
-		usleep(100);
-}
-
-void ft_free(t_data *data)
-{
-	int i = 0;
-	while (i < data->n_of_philo)
-	{
-		pthread_detach(data->threads[i]);
-		i++;
-	}
-	//pthread_mutex_destroy(&data->msg);
-	//free(data->philo);
-	//free(data);
-}
-
-int	ft_atoi(const char *str)
-{
-	int	i;
-	int	neg;
-	int	res;
-
-	neg = 1;
-	res = 0;
-	i = 0;
-	while (str[i] <= 32)
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			neg = -1;
-		i++;
-	}
-	while (str[i] != '\0' && str[i] >= '0' && str[i] <= '9')
-	{
-		res *= 10;
-		res += str[i] - 48;
-		i++;
-	}
-	return (res * neg);
+		usleep(50);
 }

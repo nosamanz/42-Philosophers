@@ -15,19 +15,26 @@
 void	msg(long long time, char *str, t_philos *philo)
 {
 	pthread_mutex_lock(&philo->data->msg);
-	printf("TIME: [%lld] Philo[%d], %s\n", time - philo->start_time, philo->id, str);
-	pthread_mutex_unlock(&philo->data->msg);
+	if (lc_die(philo->data) == 1)
+	{
+		printf("TIME: [%lld] Philo[%d], %s\n", time - philo->start_time, philo->id, str);
+		pthread_mutex_unlock(&philo->data->msg);
+	}
+	else
+		pthread_mutex_unlock(&philo->data->msg);
 }
 
 void	die(t_data *data)
 {
-	data->die++;
+	data->die = 1;
 }
 
 void	last_eat(t_philos *philo)
 {
+	pthread_mutex_lock(&philo->data->m_eat);
 	philo->last_eat = get_time();
 	philo->aten++;
+	pthread_mutex_unlock(&philo->data->m_eat);
 }
 
 void	error(char *str)

@@ -36,10 +36,11 @@ typedef struct s_philos
 typedef	struct	s_data
 {
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	m_data;
 	pthread_t	*threads;
-	pthread_mutex_t	msg;
 	pthread_mutex_t	m_die;
+	pthread_mutex_t	msg;
+	pthread_mutex_t	m_eat;
+	pthread_mutex_t	m_check;
 	int	n_of_philo;
 	int	time_to_die;
 	int	time_to_eat;
@@ -60,10 +61,10 @@ void	my_sleep(long long time);
 void	error(char *str);
 void	msg(long long time, char *str, t_philos *philo);
 void 	ft_free(t_data *data);
-int		aten(t_data *data, t_philos *philo);
+int		lc_aten(t_data *data, t_philos *philo);
+int		lc_die(t_data *data);
 int		dead(t_data *data);
 void	last_eat(t_philos *philo);
 void	die(t_data *data);
-int		lc_check(t_data *data);
 
 #endif

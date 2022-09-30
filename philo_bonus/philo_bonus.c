@@ -2,12 +2,15 @@
 
 void	sem(t_data *data)
 {
-	sem_unlink("/sem");
+	sem_unlink("/forks");
 	sem_unlink("/msg");
+	sem_unlink("/eat");
 	sem_unlink("/death");
-	data->sem_forks = sem_open("/forks", O_CREAT | S_IRWXU, data->n_of_philo);
-	data->sem_msg = sem_open("/msg", O_CREAT | S_IRWXU, 1);
-	data->sem_death = sem_open("/death", O_CREAT | S_IRWXU, 1);
+	data->sem_forks = sem_open("/forks", O_CREAT, S_IRWXU, data->n_of_philo);
+	data->sem_msg = sem_open("/msg", O_CREAT, S_IRWXU, 1);
+	data->sem_eat = sem_open("/eat", O_CREAT, S_IRWXU, 1);
+	data->sem_death = sem_open("/death", O_CREAT, S_IRWXU, 1);
+	return ;
 }
 
 void	p_assigment(t_data *data, int argc, char ** argv)
@@ -26,7 +29,7 @@ void	p_assigment(t_data *data, int argc, char ** argv)
 	data->total_eat = 0;
 	sem(data);
 	i = 0;
-	while (i < data->n_of_philo && data->n_of_philo > 1)
+	while (i < data->n_of_philo && data->n_of_philo > 0)
 	{
 		data->philo[i].data = data;
 		data->philo[i].id = i + 1;
@@ -50,9 +53,9 @@ int main(int argc,char **argv)
 		data = malloc(sizeof(t_data));
 		p_assigment(data, argc, argv);
 		p_fork(data);
+		ft_free(data);
 	}
 	else
 		error("Arg Error!");
-	printf("THE END\n");
 	return (0);
 }

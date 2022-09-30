@@ -1,11 +1,8 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 RACEFLAG = -g -fsanitize=thread
-NAME = philo.a
-SRCS = philo/*.c
-
-BONUS = philo_bonus/*.c
-B_NAME = philo_bonus.a
+NAME = philo
+SRCS = *.c
 
 all : $(NAME)
 
@@ -15,14 +12,8 @@ $(NAME): $(SRCS)
 race : $(SRCS)
 	$(CC) $(SRCS) $(RACEFLAG) -o $(NAME)_race
 
-bonus : $(BONUS)
-	$(CC) $(BONUS) $(CFLAGS) -o $(B_NAME)
-
-bonusrace : $(BONUS)
-	$(CC) $(BONUS) $(RACEFLAG) -o bonus_race
-
 clean :
-	rm $(NAME)
+	rm -rf $(NAME)
 
 fclean : clean
 	rm -rf $(NAME)_race

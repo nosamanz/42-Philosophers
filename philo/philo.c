@@ -24,7 +24,8 @@ void	mutex_init(t_data *data)
 		i++;
 	}
 	pthread_mutex_init(&data->msg, NULL);
-	pthread_mutex_init(&data->m_data, NULL);
+	pthread_mutex_init(&data->m_eat, NULL);
+	pthread_mutex_init(&data->m_check, NULL);
 }
 
 void	last_philo(t_data *data, int i)

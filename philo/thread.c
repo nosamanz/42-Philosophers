@@ -23,10 +23,10 @@ int	thread_f(t_data *data)
 		pthread_create(&data->threads[i], NULL, work, &data->philo[i]);
 		i++;
 	}
-	while (data->die == 0 || aten(data, data->philo) == 0)
+	while (data->die == 0 || lc_aten(data, data->philo) == 0)
 	{
 		dead(data);
-		if (aten(data, data->philo) == 1)
+		if (lc_aten(data, data->philo) == 1)
 			return (0);
 		if (data->die != 0 || data->n_of_philo == 1)
 			break;

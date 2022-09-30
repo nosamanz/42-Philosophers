@@ -30,10 +30,7 @@ int	p_fork(t_data *data)
 		if (philo[i].pid < 0)
 			return (0);
 		if (philo[i].pid == 0)
-		{
-			data->philo[i].start_time = get_time();
 			work(&(philo[i]));
-		}
 		i++;
 	}
 	kill_them_all(data);

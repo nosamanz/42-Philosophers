@@ -12,93 +12,70 @@
 
 #include "philo.h"
 
+int	time_check(t_data *data, int i)
+{
+	pthread_mutex_lock(&data->m_eat);
+	if (data->philo[i].last_eat != 0 && (get_time() - data->philo[i].last_eat) > data->time_to_die)
+	{
+		pthread_mutex_unlock(&data->m_eat);
+		return(0);
+	}
+	pthread_mutex_unlock(&data->m_eat);
+	return (1);
+}
+
 int	dead(t_data *data)
 {
 	int i = 0;
 
 	while (i < data->n_of_philo)
 	{
-		pthread_mutex_lock(&data->m_data);
-		if ((data->philo[i].last_eat != 0 && (get_time() - data->philo[i].last_eat) > data->time_to_die)
-						|| (data->n_of_philo == 1))
+		if (!time_check(data, i) || (data->n_of_philo == 1))
 		{
 			if (data->n_of_philo == 1)
 			{
-				pthread_mutex_unlock(&data->m_data);
 				my_sleep(data->time_to_die);
 				msg(get_time(), "💀 DIED 💀", data->philo);
 				return (0);
 			}
+			pthread_mutex_lock(&data->m_die);
 			die(data);
-			pthread_mutex_unlock(&data->m_data);
+			pthread_mutex_unlock(&data->m_die);
 			my_sleep(5);
-			msg(get_time(), "💀 DIED 💀", data->philo);
+			printf("TIME: [%lld] Philo[%d], 💀 DIED 💀\n", get_time() - data->philo[i].start_time, data->philo[i].id);
 			return (0);
 		}
-		pthread_mutex_unlock(&data->m_data);
 		i++;
 	}
 	return (1);
 }
 
-int	lc_check(t_data *data)
+int	lc_die(t_data *data)
 {
-	pthread_mutex_lock(&data->m_data);
-	if (data->die > 0 || aten(data, data->philo) == 1)
+	pthread_mutex_lock(&data->m_die);
+	if (data->die > 0)
 	{
-		pthread_mutex_unlock(&data->m_data);
+		pthread_mutex_unlock(&data->m_die);
 		return (0);
 	}
-	pthread_mutex_unlock(&data->m_data);
+	pthread_mutex_unlock(&data->m_die);
 	return (1);
 }
 
-int	aten(t_data *data, t_philos *philo)
+int	lc_aten(t_data *data, t_philos *philo)
 {
+	pthread_mutex_lock(&data->m_eat);
 	if (philo->aten == data->n_of_ph_m_eat && data->n_of_ph_m_eat > 0)
 	{
 		data->total_eat++;
 		if (data->total_eat == data->n_of_ph_m_eat)
+		{
+			pthread_mutex_unlock(&data->m_eat);
 			return (1);
+		}
+		pthread_mutex_unlock(&data->m_eat);
 		return (0);
 	}
+	pthread_mutex_unlock(&data->m_eat);
 	return (0);
-}
-
-int	is_arg_zero(char c)
-{
-	if (c == '0')
-	{
-		error("Arg must be greater than 0");
-		return (1);
-	}
-	return (0);
-}
-
-int	arg_check(int argc, char **argv)
-{
-	int i;
-	int j;
-
-	i = 1;
-	j = 0;
-	while (i < argc)
-	{
-		if (is_arg_zero(argv[i][j]))
-			return (0);
-		while (argv[i][j] != '\0')
-		{
-			if ((argv[i][j] >= '0' && argv[i][j] <= '9'))
-				j++;
-			else if (j == 0 && argv[i][j] == '+' && argv[i][j + 1] > 32)
-				j++;
-			else
-				return (0);
-		}
-		j = 0;
-		if (ft_atoi(argv[i]) < 0)
-			return (0);
-		i++;
-	}
-	return (1);
 }

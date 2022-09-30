@@ -21,7 +21,6 @@ typedef struct s_philos
 	int				id;
 	int				pid;
 	int				aten;
-	long long int	start_time;
 	long long int	last_eat;
 	t_data	*data;
 }		t_philos;
@@ -32,6 +31,7 @@ typedef struct s_data
 	sem_t	*sem_forks;
 	sem_t	*sem_msg;
 	sem_t	*sem_death;
+	sem_t	*sem_eat;
 	int	n_of_philo;
 	int	time_to_die;
 	int	time_to_eat;
@@ -39,6 +39,7 @@ typedef struct s_data
 	int	n_of_ph_m_eat;
 	int	die;
 	int	total_eat;
+	long long int	start_time;
 }		t_data;
 
 int		ft_atoi(const char *str);
@@ -55,5 +56,6 @@ void	my_sleep(long long time);
 void	*dead_check(void *ptr);
 int		lc_check(t_philos *philo);
 void	kill_them_all(t_data *data);
+void	ft_free(t_data *data);
 
 #endif
