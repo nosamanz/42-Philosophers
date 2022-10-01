@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:06:53 by oozcan            #+#    #+#             */
-/*   Updated: 2022/09/28 12:38:41 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/10/01 14:45:38 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	mutex_init(t_data *data)
 	pthread_mutex_init(&data->msg, NULL);
 	pthread_mutex_init(&data->m_eat, NULL);
 	pthread_mutex_init(&data->m_check, NULL);
+	pthread_mutex_init(&data->m_die, NULL);
 }
 
 void	last_philo(t_data *data, int i)
