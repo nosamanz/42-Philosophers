@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 16:54:15 by oozcan            #+#    #+#             */
-/*   Updated: 2022/10/01 17:26:33 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/10/01 18:38:17 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	msg(long long time, char *str, t_philos *philo)
 {
 	sem_wait(philo->data->sem_msg);
 	if (philo->data->die == 0)
-		printf("TIME: [%lld] Philo[%d], %s\n", \
+		printf("%lld %d %s\n", \
 				time - philo->data->start_time, philo->id, str);
 	sem_post(philo->data->sem_msg);
 	sem_post(philo->data->sem_msg);
