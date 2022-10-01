@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:50 by oozcan            #+#    #+#             */
-/*   Updated: 2022/10/01 17:02:10 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/10/01 17:41:06 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int	dead(t_data *data)
 			if (data->n_of_philo == 1)
 			{
 				my_sleep(data->time_to_die);
-				msg(get_time(), "💀 DIED 💀", data->philo);
+				msg(get_time(), "died", data->philo);
 				return (0);
 			}
-			printf("TIME: [%lld] Philo[%d], 💀 DIED 💀\n", \
+			printf("%lld %d, died\n", \
 					get_time() - data->philo[i].start_time, data->philo[i].id);
 			pthread_mutex_lock(&data->m_die);
 			die(data);

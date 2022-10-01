@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 16:53:43 by oozcan            #+#    #+#             */
-/*   Updated: 2022/10/01 17:10:47 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/10/01 17:42:03 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*dead_check(void *ptr)
 		{
 			sem_wait(philo->data->sem_death);
 			my_sleep(3);
-			msg(get_time(), "DEAD", philo);
+			msg(get_time(), "died", philo);
 			exit(1);
 		}
 		sem_post(philo->data->sem_eat);

@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 16:54:00 by oozcan            #+#    #+#             */
-/*   Updated: 2022/10/01 17:27:07 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/10/01 17:34:18 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	main(int argc, char **argv)
 		data = malloc(sizeof(t_data));
 		p_assigment(data, argc, argv);
 		p_fork(data);
-		ft_free(data);
 	}
 	else
 		error("Arg Error!");
