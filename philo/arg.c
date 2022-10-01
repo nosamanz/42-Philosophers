@@ -1,16 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   arg.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/01 16:55:02 by oozcan            #+#    #+#             */
+/*   Updated: 2022/10/01 17:00:28 by oozcan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-void ft_free(t_data *data)
+void	ft_free(t_data *data)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (i < data->n_of_philo)
 	{
 		pthread_detach(data->threads[i]);
 		i++;
 	}
-	//pthread_mutex_destroy(&data->msg);
-	//free(data->philo);
-	//free(data);
 }
 
 int	ft_atoi(const char *str)
@@ -51,8 +62,8 @@ int	is_arg_zero(char c)
 
 int	arg_check(int argc, char **argv)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	j = 0;

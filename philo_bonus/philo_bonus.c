@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/01 16:54:00 by oozcan            #+#    #+#             */
+/*   Updated: 2022/10/01 17:27:07 by oozcan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
 void	sem(t_data *data)
@@ -13,7 +25,7 @@ void	sem(t_data *data)
 	return ;
 }
 
-void	p_assigment(t_data *data, int argc, char ** argv)
+void	p_assigment(t_data *data, int argc, char **argv)
 {
 	int	i;
 
@@ -27,6 +39,7 @@ void	p_assigment(t_data *data, int argc, char ** argv)
 		data->n_of_ph_m_eat = ft_atoi(argv[5]);
 	data->die = 0;
 	data->total_eat = 0;
+	data->everyone_ate = 0;
 	sem(data);
 	i = 0;
 	while (i < data->n_of_philo && data->n_of_philo > 0)
@@ -39,12 +52,12 @@ void	p_assigment(t_data *data, int argc, char ** argv)
 	}
 }
 
-int main(int argc,char **argv)
+int	main(int argc, char **argv)
 {
+	t_data	*data;
+
 	if (argc == 5 || argc == 6)
 	{
-		t_data *data;
-
 		if (!arg_check(argc, argv))
 		{
 			error("Arg Error! Invalid Arg");

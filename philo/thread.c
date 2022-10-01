@@ -14,7 +14,7 @@
 
 int	thread_f(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < data->n_of_philo)
@@ -29,7 +29,7 @@ int	thread_f(t_data *data)
 		if (lc_aten(data, data->philo) == 1)
 			return (0);
 		if (data->die != 0 || data->n_of_philo == 1)
-			break;
+			break ;
 	}
 	i = 0;
 	while (i++ < data->n_of_philo)

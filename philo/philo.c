@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:06:53 by oozcan            #+#    #+#             */
-/*   Updated: 2022/10/01 14:45:38 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/10/01 17:04:19 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	last_philo(t_data *data, int i)
 
 void	p_assigment(t_data *data, int argc, char **argv)
 {
-	int i;
-	i = 0;
+	int	i;
 
+	i = 0;
 	data->n_of_philo = ft_atoi(argv[1]);
 	data->philo = malloc(sizeof(t_philos) * data->n_of_philo);
 	data->time_to_die = ft_atoi(argv[2]);
@@ -65,14 +65,14 @@ void	p_assigment(t_data *data, int argc, char **argv)
 		i++;
 	}
 	last_philo(data, i);
- }
+}
 
 int	main(int argc, char **argv)
 {
+	t_data	*data;
+
 	if (argc == 5 || argc == 6)
 	{
-		t_data	*data;
-
 		if (!arg_check(argc, argv))
 		{
 			error("Arg Error! Invalid Arg");

@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:17 by oozcan            #+#    #+#             */
-/*   Updated: 2022/10/01 14:46:42 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/10/01 17:07:07 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	msg(long long time, char *str, t_philos *philo)
 	pthread_mutex_lock(&philo->data->msg);
 	if (lc_die(philo->data) == 1)
 	{
-		printf("TIME: [%lld] Philo[%d], %s\n", time - philo->start_time, philo->id, str);
+		printf("TIME: [%lld] Philo[%d], %s\n", \
+			time - philo->start_time, philo->id, str);
 		pthread_mutex_unlock(&philo->data->msg);
 	}
 	else
@@ -39,7 +40,9 @@ void	last_eat(t_philos *philo)
 
 void	error(char *str)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (str[i])
 	{
 		write(2, &str[i], 1);

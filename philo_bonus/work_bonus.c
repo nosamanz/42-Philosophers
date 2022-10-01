@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   work_bonus.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/01 16:53:56 by oozcan            #+#    #+#             */
+/*   Updated: 2022/10/01 17:16:28 by oozcan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
 void	one_philo(t_philos *philo)
@@ -40,7 +52,7 @@ void	thinking(t_philos *philo)
 
 void	work(void *ptr)
 {
-	t_philos *philo;
+	t_philos	*philo;
 
 	philo = (t_philos *)ptr;
 	philo->data->start_time = get_time();
@@ -51,10 +63,15 @@ void	work(void *ptr)
 		my_sleep(philo->data->time_to_eat);
 	while (1)
 	{
+		if (lc_check(philo) != 1)
+			break ;
 		eating(philo);
+		if (lc_check(philo) != 1)
+			break ;
 		sleeping(philo);
-		if (lc_check(philo) == 1)
-			thinking(philo);
+		if (lc_check(philo) != 1)
+			break ;
+		thinking(philo);
 	}
 	pthread_join(philo->t_dead_check, NULL);
 	exit(0);
