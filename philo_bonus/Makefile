@@ -15,4 +15,6 @@ clean :
 fclean : clean
 	rm -rf $(NAME)
 
+bonus : all
+
 re : clean all

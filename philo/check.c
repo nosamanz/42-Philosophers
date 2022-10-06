@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:50 by oozcan            #+#    #+#             */
-/*   Updated: 2022/10/01 18:35:50 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/10/06 15:04:13 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	dead(t_data *data)
 	i = 0;
 	while (i < data->n_of_philo)
 	{
+		if (lc_aten(data, data->philo, i) == 1)
+			return (0);
 		if (!time_check(data, i) || (data->n_of_philo == 1))
 		{
 			if (data->n_of_philo == 1)
@@ -55,22 +57,32 @@ int	dead(t_data *data)
 int	lc_die(t_data *data)
 {
 	pthread_mutex_lock(&data->m_die);
+	pthread_mutex_lock(&data->m_eat);
+	if (data->total_eat == data->n_of_philo)
+	{
+		pthread_mutex_unlock(&data->m_eat);
+		my_sleep(90);
+		return (0);
+	}
 	if (data->die > 0)
 	{
+		pthread_mutex_unlock(&data->m_eat);
 		pthread_mutex_unlock(&data->m_die);
 		return (0);
 	}
+	pthread_mutex_unlock(&data->m_eat);
 	pthread_mutex_unlock(&data->m_die);
 	return (1);
 }
 
-int	lc_aten(t_data *data, t_philos *philo)
+int	lc_aten(t_data *data, t_philos *philo, int i)
 {
 	pthread_mutex_lock(&data->m_eat);
-	if (philo->aten == data->n_of_ph_m_eat && data->n_of_ph_m_eat > 0)
+	if (philo[i].aten == data->n_of_ph_m_eat && data->n_of_ph_m_eat > 0)
 	{
 		data->total_eat++;
-		if (data->total_eat == data->n_of_ph_m_eat)
+		philo[i].aten = 0;
+		if (data->total_eat == data->n_of_philo)
 		{
 			pthread_mutex_unlock(&data->m_eat);
 			return (1);

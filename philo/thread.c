@@ -23,14 +23,15 @@ int	thread_f(t_data *data)
 		pthread_create(&data->threads[i], NULL, work, &data->philo[i]);
 		i++;
 	}
-	while (data->die == 0 || lc_aten(data, data->philo) == 0)
+	while (data->die == 0)
 	{
-		dead(data);
-		if (lc_aten(data, data->philo) == 1)
-			return (0);
+		if (dead(data) == 0)
+			break ;
 		if (data->die != 0 || data->n_of_philo == 1)
 			break ;
 	}
+	if (data->total_eat == data->n_of_philo)
+		return (0);
 	i = 0;
 	while (i++ < data->n_of_philo)
 		pthread_join(data->threads[i], NULL);

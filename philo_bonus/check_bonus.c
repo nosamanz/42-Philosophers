@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 16:53:43 by oozcan            #+#    #+#             */
-/*   Updated: 2022/10/01 17:42:03 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/10/06 12:40:55 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	*dead_check(void *ptr)
 	while (1)
 	{
 		sem_wait(philo->data->sem_eat);
-		if (aten(philo->data, philo) == 1)
-			exit(1);
 		if ((get_time() - philo->last_eat) > philo->data->time_to_die && \
 				philo->last_eat != 0)
 		{
@@ -33,33 +31,36 @@ void	*dead_check(void *ptr)
 		sem_post(philo->data->sem_eat);
 		if (philo->data->die)
 			break ;
+		if (aten(philo->data, philo) == 1)
+			break ;
 	}
 	return (NULL);
 }
 
 int	aten(t_data *data, t_philos *philo)
 {
+	sem_wait(philo->data->sem_eat);
 	if (philo->aten == data->n_of_ph_m_eat && data->n_of_ph_m_eat > 0)
 	{
 		data->total_eat++;
-		if (data->total_eat >= data->n_of_ph_m_eat)
+		if (data->total_eat == data->n_of_philo)
 		{
 			philo->data->everyone_ate = 1;
+			sem_post(philo->data->sem_eat);
 			return (1);
 		}
+		sem_post(philo->data->sem_eat);
 		return (0);
 	}
+	sem_post(philo->data->sem_eat);
 	return (0);
 }
 
 int	lc_check(t_philos *philo)
 {
-	if ((get_time() - philo->last_eat) > philo->data->time_to_die \
-					&& philo->last_eat != 0)
+	if (philo->data->everyone_ate == 1)
 	{
-		sem_wait(philo->data->sem_death);
-		philo->data->die++;
-		sem_post(philo->data->sem_death);
+		my_sleep(philo->data->time_to_die);
 		return (0);
 	}
 	return (1);

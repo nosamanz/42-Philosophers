@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 16:53:56 by oozcan            #+#    #+#             */
-/*   Updated: 2022/10/01 17:42:43 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/10/06 15:04:58 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,10 @@ void	eating(t_philos *philo)
 	msg(get_time(), "has taken a fork", philo);
 	sem_wait(philo->data->sem_forks);
 	msg(get_time(), "has taken a fork", philo);
+	msg(get_time(), "eating", philo);
 	sem_wait(philo->data->sem_eat);
-	sem_wait(philo->data->sem_death);
 	philo->last_eat = get_time();
 	philo->aten++;
-	sem_post(philo->data->sem_death);
-	msg(get_time(), "eating", philo);
 	sem_post(philo->data->sem_eat);
 	my_sleep(philo->data->time_to_eat);
 	sem_post(philo->data->sem_forks);
@@ -73,6 +71,5 @@ void	work(void *ptr)
 			break ;
 		thinking(philo);
 	}
-	pthread_join(philo->t_dead_check, NULL);
 	exit(0);
 }

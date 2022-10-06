@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:19:36 by oozcan            #+#    #+#             */
-/*   Updated: 2022/10/01 17:20:57 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/10/06 15:04:24 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	my_sleep(long long time);
 void	error(char *str);
 void	msg(long long time, char *str, t_philos *philo);
 void	ft_free(t_data *data);
-int		lc_aten(t_data *data, t_philos *philo);
+int		lc_aten(t_data *data, t_philos *philo, int i);
 int		lc_die(t_data *data);
 int		dead(t_data *data);
 void	last_eat(t_philos *philo);
