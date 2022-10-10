@@ -6,7 +6,7 @@
 /*   By: oozcan <oozcan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 16:54:15 by oozcan            #+#    #+#             */
-/*   Updated: 2022/10/01 18:38:17 by oozcan           ###   ########.fr       */
+/*   Updated: 2022/10/10 12:15:07 by oozcan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	msg(long long time, char *str, t_philos *philo)
 		printf("%lld %d %s\n", \
 				time - philo->data->start_time, philo->id, str);
 	sem_post(philo->data->sem_msg);
-	sem_post(philo->data->sem_msg);
+	//sem_post(philo->data->sem_msg);
 }
 
 void	error(char *str)
